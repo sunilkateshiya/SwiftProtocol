@@ -8,47 +8,66 @@
 
 import Foundation
 
-protocol getMessageDelegate {
-    func getMessage(string : String)
+protocol ResonseArrived {
+    func resonseArrived(string : String)
 }
 
-class classA : getMessageDelegate{
+class NetworkClass {
     
-    func getMessage(string: String) {
+    var delegate : ResonseArrived?
+    
+    func retiveDataFromUrl(url : String){
         
-        print("Class A === >> \(string)")
+        //Network Request
+        //DidComplete
+        delegate?.resonseArrived(string: "")
+    }
+}
+
+class ViewController : ResonseArrived
+{
+    func resonseArrived(string: String) {
+        print(" ==>> \(string)")
+    }
+
+    
+    func MakeRequestAction()
+    {
+
+        var objNetworkClass = NetworkClass()
+        objNetworkClass.delegate = self
+        objNetworkClass.retiveDataFromUrl(url: "http://...")
         
     }
 }
 
-class classB
-{
-    var delegate : getMessageDelegate?
-    
-    func MakeAction()
-    {
-        self.delegate?.getMessage(string: "Hello from B")
-    }
-}
 
-class classC
-{
-    var delegate : getMessageDelegate?
-    
-    func MakeAction()
-    {
-        self.delegate?.getMessage(string: "Hello from C")
-    }
-    
-}
 
-class classD
-{
-    var delegate : getMessageDelegate?
-    
-    func MakeAction()
-    {
-        self.delegate?.getMessage(string: "Hello from D")
-    }
-    
-}
+var objA  = NetworkClass()
+
+var objController  = ViewController()
+
+objController.MakeRequestAction()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
